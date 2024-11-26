@@ -1,0 +1,33 @@
+// Colors
+$primary-color: #007bff; // Azul principal (puedes personalizar este color según tu branding)
+$secondary-color: #343a40; // Gris oscuro para el fondo
+$success-color: #28a745; // Verde para acciones exitosas
+$danger-color: #dc3545; // Rojo para acciones de peligro o errores
+$warning-color: #ffc107; // Amarillo para advertencias
+$info-color: #17a2b8; // Azul para información adicional
+$light-color: #f8f9fa; // Color claro para fondos ligeros
+$dark-color: #343a40; // Color oscuro para elementos de texto
+
+// Backgrounds
+$body-bg: #f8fafc; // Fondo del cuerpo
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+$text-color: #212529; // Color base para textos
+
+// Buttons
+$btn-primary-bg: $primary-color;
+$btn-primary-border: $primary-color;
+$btn-secondary-bg: $secondary-color;
+$btn-secondary-border: $secondary-color;
+
+// Navbar
+$navbar-bg: $dark-color; // Color de fondo de la barra de navegación
+$navbar-light-color: $light-color; // Color de texto para el navbar claro
+$navbar-dark-color: $primary-color; // Color de texto para el navbar oscuro
+
+// Scrollbar Colors
+$scrollbar-bg: $secondary-color; // Fondo del scrollbar
+$scrollbar-thumb-bg: $primary-color; // Fondo del "thumb" del scrollbar
