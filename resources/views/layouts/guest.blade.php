@@ -8,13 +8,11 @@
     <meta name="keywords" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ asset('favicon.ico') }}" rel="icon">
+    <link href="{{ asset('favicon.ico') }}" rel="apple-touch-icon">
 
-    <!-- Scripts -->
     @viteReactRefresh
     @vite(['resources/sass/guest.scss', 'resources/js/guest.jsx'])
 </head>

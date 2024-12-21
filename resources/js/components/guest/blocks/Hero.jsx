@@ -35,25 +35,31 @@ const Hero = () => {
                     width: 80%;
                     max-width: 800px;
                     background: #000;
+                    padding: 1rem;
                     border-radius: 10px;
-                    overflow: hidden;
                 }
 
                 .video-modal-close {
                     position: fixed;
                     top: 20px;
                     right: 20px;
-                    background: none;
+                    background: #000;
                     border: none;
                     font-size: 2rem;
                     color: #fff;
                     cursor: pointer;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     z-index: 1200;
-                    transition: transform 0.3s ease;
                 }
 
                 .video-modal-close:hover {
-                    transform: scale(1.2);
+                    background: #007BFF;
+                    color: #fff;
                 }
 
                 .video-modal-overlay {
@@ -64,6 +70,50 @@ const Hero = () => {
                     bottom: 0;
                     background: transparent;
                     z-index: 1000;
+                }
+
+                /* Estilo del botón Empieza Gratis */
+                .btn-get-started {
+                    background-color: #007BFF;
+                    color: #fff;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 30px;
+                    font-size: 1rem;
+                    text-decoration: none;
+                    transition: background-color 0.3s;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                .btn-get-started:hover {
+                    background-color: #0056b3;
+                }
+
+                /* Estilo del botón de ver video */
+                .btn-watch-video {
+                    margin-left: 1rem;
+                    text-decoration: none;
+                    color: #fff;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    font-size: 1rem;
+                }
+
+                .btn-watch-video i {
+                    font-size: 2rem;
+                    color: #fff;
+                }
+
+                .btn-watch-video:hover i {
+                    color: #007BFF;
+                }
+
+                /* Estilo para la palabra OmmSuite */
+                .highlight-ommsuite {
+                    color: #77B6CA;
                 }
             `}</style>
 
@@ -76,40 +126,27 @@ const Hero = () => {
                 </div>
                 <div className="container text-center">
                     <div className="d-flex flex-column justify-content-center align-items-center">
-                        <h1>Welcome to <span>OmmSuite</span></h1>
+                        <h1>
+                            Transforma la Gestión de tu Negocio con <span className="highlight-ommsuite">OmmSuite</span>
+                        </h1>
                         <p>
-                            Quickly manage your business operations and enhance customer engagement with OmmSuite.
+                            OmmSuite te ofrece una solución todo-en-uno para gestionar clientes, ventas y soporte.
+                            Empieza hoy mismo y lleva tu empresa al siguiente nivel con una experiencia integrada y
+                            sin complicaciones.
                         </p>
                         <div className="d-flex">
-                            <a
-                                href="#about"
+                            <button
                                 className="btn-get-started"
-                                style={{
-                                    backgroundColor: '#007BFF',
-                                    color: '#fff',
-                                    padding: '0.75rem 1.5rem',
-                                    borderRadius: '30px',
-                                    fontSize: '1rem',
-                                    textDecoration: 'none',
-                                    transition: 'background-color 0.3s',
-                                }}
+                                onClick={() => window.location.href = '#about'}
                             >
-                                Get Started
-                            </a>
+                                Empieza Gratis
+                            </button>
                             <button
                                 className="btn-watch-video d-flex align-items-center"
-                                style={{
-                                    marginLeft: '1rem',
-                                    textDecoration: 'none',
-                                    color: '#007BFF',
-                                    background: 'none',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                }}
                                 onClick={handleOpenVideo}
                             >
                                 <i className="bi bi-play-circle"></i>
-                                <span style={{ marginLeft: '0.5rem' }}>Watch Video</span>
+                                <span style={{ marginLeft: '0.5rem' }}>Ver Video</span>
                             </button>
                         </div>
                         <img
@@ -125,24 +162,23 @@ const Hero = () => {
                     <>
                         <div className="video-modal-overlay" onClick={handleCloseVideo}></div>
                         <div className="video-modal">
+                            <button className="video-modal-close" onClick={handleCloseVideo}>
+                                &times;
+                            </button>
                             <div className="video-modal-content">
-                                <div className="video-container" style={{ paddingTop: '56.25%', position: 'relative' }}>
+                                <div className="video-container">
                                     <iframe
                                         width="100%"
-                                        height="100%"
+                                        height="450px"
                                         src="https://www.youtube.com/embed/Y7f98aduVJ8"
                                         title="OmmSuite Video"
                                         frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
-                                        style={{ position: 'absolute', top: 0, left: 0 }}
                                     ></iframe>
                                 </div>
                             </div>
                         </div>
-                        <button className="video-modal-close" onClick={handleCloseVideo}>
-                            &times;
-                        </button>
                     </>
                 )}
             </section>

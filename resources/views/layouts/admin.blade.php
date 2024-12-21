@@ -4,16 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>{{ config('app.name') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <title>@yield('title') - {{ config('app.name') }}</title>
 
-    <!-- Scripts -->
+    <link href="{{ asset('favicon.ico') }}" rel="icon">
+    <link href="{{ asset('favicon.ico') }}" rel="apple-touch-icon">
+
     @viteReactRefresh
     @vite(['resources/sass/admin.scss', 'resources/js/admin.jsx'])
 </head>
@@ -31,6 +30,15 @@
 
     <!-- Contenedor para Footer -->
     <div id="footer-container"></div>
+
+    <script>
+        window.routes = {
+            baseUrl: "{{ url('/') }}",
+            dashboard: "{{ route('dashboard') }}",
+            usersIndex: "{{ route('users.index') }}",
+            usersCreate: "{{ route('users.create') }}",
+        };
+    </script>
 </body>
 
 </html>

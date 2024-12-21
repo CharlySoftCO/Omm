@@ -43,8 +43,9 @@ const Footer = () => {
                 <div className="row gy-4">
                     {/* About Section */}
                     <div className="col-lg-4 col-md-6 footer-about">
-                        <a href="/" className="logo d-flex align-items-center">
-                            <span className="sitename">QuickStart</span>
+                        <a href="/" className="logo d-flex align-items-center text-decoration-none">
+                            <img src="images/guest/logo.jpg" className="rounded" alt="Logo" />
+                            <h1 className="sitename ms-2 mb-0" style={{ fontSize: '1.5rem', color: '#333' }}>OmmSuite</h1>
                         </a>
                         <div className="footer-contact pt-3">
                             <p>A108 Adam Street</p>
@@ -57,15 +58,6 @@ const Footer = () => {
                             </p>
                         </div>
                         <div className="social-links d-flex mt-4">
-                            <a href="#" className="me-3">
-                                <i className="bi bi-twitter"></i>
-                            </a>
-                            <a href="#" className="me-3">
-                                <i className="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" className="me-3">
-                                <i className="bi bi-instagram"></i>
-                            </a>
                             <a href="#">
                                 <i className="bi bi-linkedin"></i>
                             </a>
@@ -125,11 +117,10 @@ const Footer = () => {
             {/* Copyright Section */}
             <div className="container copyright text-center mt-4">
                 <p>
-                    © <span>Copyright</span> <strong className="px-1 sitename">QuickStart</strong>
-                    <span> All Rights Reserved</span>
+                    &copy; {new Date().getFullYear()} <strong><span>OmmSuite</span></strong>. Todos los derechos reservados.
                 </p>
                 <div className="credits">
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    Diseñado por <a href="https://ommsuite.com/">OmmSuite Team</a>
                 </div>
             </div>
 

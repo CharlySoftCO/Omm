@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 
 const Header = () => {
+  // Obtener la base URL desde el objeto global `window.routes`
+  const baseUrl = window.routes?.baseUrl || '/';
+
   // Función para manejar el clic en el botón del menú
   const toggleSidebar = () => {
     const body = document.body;
@@ -27,11 +30,37 @@ const Header = () => {
     }
   };
 
+  // Función para manejar el cierre de sesión
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    try {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        credentials: 'include', // Para enviar cookies junto con la solicitud
+      });
+
+      if (response.ok) {
+        window.location.href = '/';
+      } else {
+        console.error('Error al cerrar sesión:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
+
   // Hook de efectos para añadir eventos
   useEffect(() => {
-    // Añadir evento para el scroll del header
     window.addEventListener('scroll', headerScrolled);
-    // Remover evento cuando el componente se desmonte
+
     return () => {
       window.removeEventListener('scroll', headerScrolled);
     };
@@ -40,10 +69,11 @@ const Header = () => {
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
       <div className="d-flex align-items-center justify-content-between">
-        <a href="index.html" className="logo d-flex align-items-center">
-          <img className="rounded" src="images/logo.jpg" alt="Logo" />
+        <a href={`${baseUrl}`} className="logo d-flex align-items-center text-decoration-none">
+          <img className="rounded" src={`${baseUrl}/images/logo.jpg`} alt="Logo" />
           <span className="d-none d-lg-block">OmmSuite</span>
         </a>
+
         {/* Botón para abrir/cerrar el sidebar */}
         <i
           className="bi bi-list toggle-sidebar-btn"
@@ -55,7 +85,7 @@ const Header = () => {
 
       <div className="search-bar">
         <form className="search-form d-flex align-items-center" method="POST" action="#">
-          <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
+          <input type="text" name="query" placeholder="Encuéntralo fácil" title="Enter search keyword" />
           <button type="submit" title="Search">
             <i className="bi bi-search"></i>
           </button>
@@ -77,23 +107,12 @@ const Header = () => {
             </a>
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
               <li className="dropdown-header">
-                You have 4 new notifications
+                Tienes 4 notificaciones nuevas
                 <a href="#">
-                  <span className="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+                  <span className="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span>
                 </a>
               </li>
               <li><hr className="dropdown-divider" /></li>
-              {/* Lista de notificaciones */}
-              <li className="notification-item">
-                <i className="bi bi-exclamation-circle text-warning"></i>
-                <div>
-                  <h4>Lorem Ipsum</h4>
-                  <p>Quae dolorem earum veritatis oditseno</p>
-                  <p>30 min. ago</p>
-                </div>
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-              {/* Más notificaciones */}
             </ul>
           </li>
 
@@ -104,25 +123,12 @@ const Header = () => {
             </a>
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
               <li className="dropdown-header">
-                You have 3 new messages
+                Tienes 3 mensajes nuevos
                 <a href="#">
-                  <span className="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+                  <span className="badge rounded-pill bg-primary p-2 ms-2">Ver todos</span>
                 </a>
               </li>
               <li><hr className="dropdown-divider" /></li>
-              {/* Lista de mensajes */}
-              <li className="message-item">
-                <a href="#">
-                  <img src="assets/img/messages-1.jpg" alt="" className="rounded-circle" />
-                  <div>
-                    <h4>Maria Hudson</h4>
-                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                    <p>4 hrs. ago</p>
-                  </div>
-                </a>
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-              {/* Más mensajes */}
             </ul>
           </li>
 
@@ -132,44 +138,19 @@ const Header = () => {
               href="#"
               data-bs-toggle="dropdown"
             >
-              <img src="assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" />
+              <img src={`${baseUrl}/images/admin/profile-img.jpg`} alt="Perfil" className="rounded-circle" />
               <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
             </a>
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li className="dropdown-header">
                 <h6>Kevin Anderson</h6>
-                <span>Web Designer</span>
+                <span>Diseñador Web</span>
               </li>
               <li><hr className="dropdown-divider" /></li>
-
               <li>
-                <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i className="bi bi-person"></i>
-                  <span>My Profile</span>
-                </a>
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-
-              <li>
-                <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i className="bi bi-gear"></i>
-                  <span>Account Settings</span>
-                </a>
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-
-              <li>
-                <a className="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                  <i className="bi bi-question-circle"></i>
-                  <span>Need Help?</span>
-                </a>
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-
-              <li>
-                <a className="dropdown-item d-flex align-items-center" href="#">
+                <a className="dropdown-item d-flex align-items-center text-danger" href="#" onClick={handleLogout}>
                   <i className="bi bi-box-arrow-right"></i>
-                  <span>Sign Out</span>
+                  <span>Cerrar Sesión</span>
                 </a>
               </li>
             </ul>

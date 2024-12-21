@@ -1,5 +1,7 @@
 @extends('layouts.guest')
 
+@section('title', 'Inicio')
+
 @section('content')
 <div
     id="home"
