@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -12,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users = User::orderBy('id', 'desc')->get();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -28,15 +32,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'phone_number' => 'nullable|string|max:15', // Validación para número de celular
+            'profile_image' => 'nullable|image|max:2048', // Validación para imagen
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        // Procesar y guardar la imagen si existe
+        $profileImagePath = null;
+        if ($request->hasFile('profile_image')) {
+            $profileImagePath = $request->file('profile_image')->store('users', 'public');
+        }
+
+        // Crear el usuario
+        User::create([
+            'full_name' => $validatedData['full_name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'phone_number' => $validatedData['phone_number'],
+            'profile_image' => $profileImagePath,
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
@@ -44,7 +64,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -52,7 +73,35 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'phone_number' => 'nullable|string|max:15', // Validación para número de celular
+            'profile_image' => 'nullable|image|max:2048', // Validación para imagen
+        ]);
+
+        $user = User::findOrFail($id);
+
+        // Procesar y guardar la imagen si existe
+        if ($request->hasFile('profile_image')) {
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+            $user->profile_image = $request->file('profile_image')->store('users', 'public');
+        }
+
+        $user->full_name = $validatedData['full_name'];
+        $user->email = $validatedData['email'];
+        $user->phone_number = $validatedData['phone_number'];
+
+        if (!empty($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
@@ -60,6 +109,14 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if ($user->profile_image) {
+            Storage::disk('public')->delete($user->profile_image);
+        }
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
     }
 }

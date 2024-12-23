@@ -20,10 +20,28 @@
     scroll-behavior: smooth;
 }
 
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     background: #f6f9ff;
     color: #444444;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Hace que main ocupe todo el espacio disponible */
+}
+
+footer {
+    margin-top: auto; /* Empuja el footer hacia abajo */
 }
 
 a {

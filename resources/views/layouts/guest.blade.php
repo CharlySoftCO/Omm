@@ -20,7 +20,7 @@
 <body class="index-page">
 
     <div id="header-container"
-        data-user="{{ auth()->check() ? json_encode(['name' => auth()->user()->name]) : 'null' }}"
+        data-user="{{ auth()->check() ? json_encode(['full_name' => auth()->user()->full_name]) : 'null' }}"
         data-auth-routes="{{ json_encode([
             'dashboard' => route('dashboard'),
             'login' => route('login'),

@@ -80,7 +80,7 @@ const Header = ({ user, authRoutes }) => {
                                     aria-expanded="false"
                                     style={{ ...authButtonStyle, backgroundColor: '#007bff' }}
                                 >
-                                    <i className="bi bi-person-circle me-2"></i> {user.name}
+                                    <i className="bi bi-person-circle me-2"></i> {user.full_name}
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded" aria-labelledby="dropdownMenuButton">
                                     <li>

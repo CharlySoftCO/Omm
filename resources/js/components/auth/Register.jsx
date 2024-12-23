@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Register = ({ csrfToken, authRoutes }) => {
-  const [name, setName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -13,7 +13,7 @@ const Register = ({ csrfToken, authRoutes }) => {
 
     // Validación del lado del cliente
     let newErrors = {};
-    if (!name) newErrors.name = 'El campo nombre es obligatorio.';
+    if (!fullName) newErrors.full_name = 'El campo nombre completo es obligatorio.';
     if (!email) newErrors.email = 'El campo correo electrónico es obligatorio.';
     if (!password) newErrors.password = 'El campo contraseña es obligatorio.';
     if (password !== passwordConfirmation) newErrors.password_confirmation = 'Las contraseñas no coinciden.';
@@ -31,7 +31,7 @@ const Register = ({ csrfToken, authRoutes }) => {
           'X-CSRF-TOKEN': csrfToken,
         },
         body: JSON.stringify({
-          name,
+          full_name: fullName,
           email,
           password,
           password_confirmation: passwordConfirmation,
@@ -73,15 +73,15 @@ const Register = ({ csrfToken, authRoutes }) => {
               </div>
             )}
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">Nombre</label>
+              <label htmlFor="full_name" className="form-label">Nombre Completo</label>
               <input
-                id="name"
+                id="full_name"
                 type="text"
-                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                className={`form-control ${errors.full_name ? 'is-invalid' : ''}`}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
               />
-              {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+              {errors.full_name && <div className="invalid-feedback">{errors.full_name}</div>}
             </div>
 
             <div className="mb-3">

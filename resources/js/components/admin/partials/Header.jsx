@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
+import routes from '../../../routes';
 
 const Header = () => {
-  // Obtener la base URL desde el objeto global `window.routes`
-  const baseUrl = window.routes?.baseUrl || '/';
-
   // Función para manejar el clic en el botón del menú
   const toggleSidebar = () => {
     const body = document.body;
@@ -37,7 +35,7 @@ const Header = () => {
     try {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-      const response = await fetch('/logout', {
+      const response = await fetch(`${routes.baseUrl}/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +46,7 @@ const Header = () => {
       });
 
       if (response.ok) {
-        window.location.href = '/';
+        window.location.href = routes.baseUrl;
       } else {
         console.error('Error al cerrar sesión:', response.statusText);
       }
@@ -69,8 +67,13 @@ const Header = () => {
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
       <div className="d-flex align-items-center justify-content-between">
-        <a href={`${baseUrl}`} className="logo d-flex align-items-center text-decoration-none">
-          <img className="rounded" src={`${baseUrl}/images/logo.jpg`} alt="Logo" />
+        <a href={routes.baseUrl} className="logo d-flex align-items-center text-decoration-none">
+          <img
+            className="rounded"
+            src={`${routes.baseUrl}/images/logo.jpg`}
+            alt="Logo"
+            onError={() => console.error('Error loading logo')}
+          />
           <span className="d-none d-lg-block">OmmSuite</span>
         </a>
 
@@ -138,13 +141,24 @@ const Header = () => {
               href="#"
               data-bs-toggle="dropdown"
             >
-              <img src={`${baseUrl}/images/admin/profile-img.jpg`} alt="Perfil" className="rounded-circle" />
+              <img
+                src={`${routes.baseUrl}/images/admin/profile-img.jpg`}
+                alt="Perfil"
+                className="rounded-circle"
+                onError={() => console.error('Error loading profile image')}
+              />
               <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
             </a>
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li className="dropdown-header">
                 <h6>Kevin Anderson</h6>
                 <span>Diseñador Web</span>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/">
+                <i class="bi bi-bullseye"></i>
+                  <span>Sitio Web</span>
+                </a>
               </li>
               <li><hr className="dropdown-divider" /></li>
               <li>

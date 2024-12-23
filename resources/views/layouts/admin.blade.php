@@ -7,6 +7,16 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ url('/') }}">
+    <meta name="route-dashboard" content="{{ route('dashboard') }}">
+    <meta name="route-users-index" content="{{ route('users.index') }}">
+    <meta name="route-users-create" content="{{ route('users.create') }}">
+    <meta name="route-clients-index" content="{{ route('clients.index') }}">
+    <meta name="route-clients-create" content="{{ route('clients.create') }}">
+    <meta name="route-categories-index" content="{{ route('categories.index') }}">
+    <meta name="route-categories-create" content="{{ route('categories.create') }}">
+    <meta name="route-products-index" content="{{ route('products.index') }}">
+    <meta name="route-products-create" content="{{ route('products.create') }}">
 
     <title>@yield('title') - {{ config('app.name') }}</title>
 
@@ -18,27 +28,14 @@
 </head>
 
 <body>
-    <!-- Contenedor para Header -->
     <div id="header-container"></div>
-
-    <!-- Contenedor para Sidebar -->
     <div id="sidebar-container"></div>
 
     <main id="main" class="main">
         @yield('content')
     </main>
 
-    <!-- Contenedor para Footer -->
     <div id="footer-container"></div>
-
-    <script>
-        window.routes = {
-            baseUrl: "{{ url('/') }}",
-            dashboard: "{{ route('dashboard') }}",
-            usersIndex: "{{ route('users.index') }}",
-            usersCreate: "{{ route('users.create') }}",
-        };
-    </script>
 </body>
 
 </html>
