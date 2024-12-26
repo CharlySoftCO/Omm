@@ -28,13 +28,8 @@
                                     <!-- Nombre completo -->
                                     <div class="mb-3">
                                         <label for="full_name" class="form-label">Nombre Completo</label>
-                                        <input 
-                                            type="text" 
-                                            name="full_name" 
-                                            id="full_name" 
-                                            class="form-control" 
-                                            placeholder="Ejemplo: Juan Pérez" 
-                                            value="{{ old('full_name') }}">
+                                        <input type="text" name="full_name" id="full_name" class="form-control"
+                                            placeholder="Ej: Juan Pérez" value="{{ old('full_name') }}">
                                         @error('full_name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -43,13 +38,8 @@
                                     <!-- Correo electrónico -->
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Correo Electrónico</label>
-                                        <input 
-                                            type="email" 
-                                            name="email" 
-                                            id="email" 
-                                            class="form-control" 
-                                            placeholder="Ejemplo: juan.perez@email.com" 
-                                            value="{{ old('email') }}">
+                                        <input type="email" name="email" id="email" class="form-control"
+                                            placeholder="Ej: juan.perez@email.com" value="{{ old('email') }}">
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -58,13 +48,8 @@
                                     <!-- Número de celular -->
                                     <div class="mb-3">
                                         <label for="phone_number" class="form-label">Número de Celular (Opcional)</label>
-                                        <input 
-                                            type="text" 
-                                            name="phone_number" 
-                                            id="phone_number" 
-                                            class="form-control" 
-                                            placeholder="Ejemplo: +573001234567" 
-                                            value="{{ old('phone_number') }}">
+                                        <input type="text" name="phone_number" id="phone_number" class="form-control"
+                                            placeholder="Ej: 573001234567" value="{{ old('phone_number') }}">
                                         @error('phone_number')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -76,12 +61,8 @@
                                     <!-- Contraseña -->
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Contraseña</label>
-                                        <input 
-                                            type="password" 
-                                            name="password" 
-                                            id="password" 
-                                            class="form-control" 
-                                            placeholder="Ejemplo: Contraseña123">
+                                        <input type="password" name="password" id="password" class="form-control"
+                                            placeholder="Ej: Contraseña123">
                                         @error('password')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -90,12 +71,8 @@
                                     <!-- Confirmar contraseña -->
                                     <div class="mb-3">
                                         <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>
-                                        <input 
-                                            type="password" 
-                                            name="password_confirmation" 
-                                            id="password_confirmation" 
-                                            class="form-control" 
-                                            placeholder="Repite tu contraseña">
+                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                            class="form-control" placeholder="Repite tu contraseña">
                                         @error('password_confirmation')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -104,14 +81,11 @@
                                     <!-- Imagen de perfil -->
                                     <div class="mb-3">
                                         <label for="profile_image" class="form-label">Imagen de Perfil (Opcional)</label>
-                                        <input 
-                                            type="file" 
-                                            name="profile_image" 
-                                            id="profile_image" 
-                                            class="form-control" 
+                                        <input type="file" name="profile_image" id="profile_image" class="form-control"
                                             accept="image/*">
                                         <div class="mt-2">
-                                            <img id="profileImagePreview" src="#" alt="Vista previa" style="display: none; max-width: 150px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                                            <img id="profileImagePreview" src="#" alt="Vista previa"
+                                                style="display: none; max-width: 150px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
                                         </div>
                                         @error('profile_image')
                                             <div class="text-danger">{{ $message }}</div>

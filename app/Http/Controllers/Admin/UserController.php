@@ -77,23 +77,23 @@ class UserController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
-            'phone_number' => 'nullable|string|max:15', // Validación para número de celular
-            'profile_image' => 'nullable|image|max:2048', // Validación para imagen
+            'phone_number' => 'nullable|string|max:15',
+            'profile_image' => 'nullable|image|max:2048',
         ]);
 
         $user = User::findOrFail($id);
 
-        // Procesar y guardar la imagen si existe
         if ($request->hasFile('profile_image')) {
-            if ($user->profile_image) {
+            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
                 Storage::disk('public')->delete($user->profile_image);
             }
+
             $user->profile_image = $request->file('profile_image')->store('users', 'public');
         }
 
         $user->full_name = $validatedData['full_name'];
         $user->email = $validatedData['email'];
-        $user->phone_number = $validatedData['phone_number'];
+        $user->phone_number = $validatedData['phone_number'] ?? null;
 
         if (!empty($validatedData['password'])) {
             $user->password = bcrypt($validatedData['password']);
@@ -111,10 +111,15 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if ($user->profile_image) {
-            Storage::disk('public')->delete($user->profile_image);
+        // Ruta completa al archivo en el sistema de archivos
+        $imagePath = public_path('storage/' . $user->profile_image);
+
+        // Verificar si la imagen existe y eliminarla
+        if ($user->profile_image && file_exists($imagePath)) {
+            unlink($imagePath); // Eliminar el archivo
         }
 
+        // Eliminar el registro del usuario
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');

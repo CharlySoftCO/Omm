@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'full_name' => 'Carlos Alberto Ramirez Ruiz',
             'email' => 'cramirezruiz30@gmail.com',
             'phone_number' => '573223672315',
-            'profile_image' => 'users/' . $faker->image('storage/app/public/users', 150, 150, null, false),
+            'profile_image' => null,
             'password' => Hash::make('12345678'),
         ]);
 
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'full_name' => 'Manuel Antonio Falla Carvajal',
             'email' => 'manuelfalla1234@gmail.com',
             'phone_number' => '573197988740',
-            'profile_image' => 'users/' . $faker->image('storage/app/public/users', 150, 150, null, false),
+            'profile_image' => null,
             'password' => Hash::make('12345678'),
         ]);
     }

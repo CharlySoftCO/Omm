@@ -46,4 +46,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Accessor for the profile_image attribute.
+     *
+     * @param string|null $value
+     * @return string
+     */
+    public function getProfileImageAttribute($value)
+    {
+        return $value ?? 'default/user.webp';
+    }    
 }
