@@ -14,8 +14,11 @@ Route::get('/', HomeController::class)->name('home');
 
 Auth::routes();
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::resource('users', UserController::class)->except('show');
-Route::resource('clients', ClientController::class)->except('show');
-Route::resource('categories', CategoryController::class)->except('show');
-Route::resource('products', ProductController::class)->except('show');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('users', UserController::class)->except('show');
+    Route::resource('clients', ClientController::class)->except('show');
+    Route::resource('categories', CategoryController::class)->except('show');
+    Route::resource('products', ProductController::class)->except('show');
+});

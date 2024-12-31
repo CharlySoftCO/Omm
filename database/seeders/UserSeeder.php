@@ -46,5 +46,16 @@ class UserSeeder extends Seeder
             'profile_image' => null,
             'password' => Hash::make('12345678'),
         ]);
+
+        // Crear 98 usuarios adicionales con datos generados
+        for ($i = 0; $i < 28; $i++) {
+            User::create([
+                'full_name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'phone_number' => $faker->unique()->phoneNumber,
+                'profile_image' => null,
+                'password' => Hash::make('password'), // Contraseña genérica para usuarios generados
+            ]);
+        }
     }
 }

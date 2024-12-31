@@ -7,7 +7,6 @@ use App\Models\Admin\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-
 class UserController extends Controller
 {
     /**
@@ -16,7 +15,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'desc')->get();
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', [
+            'usersJson' => $users->toJson(),
+        ], compact('users'));
     }
 
     /**
@@ -37,8 +38,8 @@ class UserController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'phone_number' => 'nullable|string|max:15', // Validación para número de celular
-            'profile_image' => 'nullable|image|max:2048', // Validación para imagen
+            'phone_number' => 'nullable|string|max:15',
+            'profile_image' => 'nullable|image|max:2048',
         ]);
 
         // Procesar y guardar la imagen si existe
@@ -73,6 +74,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validar los datos del formulario
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
@@ -83,18 +85,29 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
+        // Procesar la imagen
         if ($request->hasFile('profile_image')) {
-            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+            // Verificar que la imagen actual no sea la predeterminada antes de intentar eliminarla
+            $defaultImage = 'default/user.webp'; // Cambia esto por la ruta exacta de tu imagen predeterminada
+
+            if (
+                $user->profile_image
+                && $user->profile_image !== $defaultImage // Comparar con la imagen predeterminada
+                && Storage::disk('public')->exists($user->profile_image)
+            ) {
                 Storage::disk('public')->delete($user->profile_image);
             }
 
+            // Subir y guardar la nueva imagen
             $user->profile_image = $request->file('profile_image')->store('users', 'public');
         }
 
+        // Actualizar otros datos del usuario
         $user->full_name = $validatedData['full_name'];
         $user->email = $validatedData['email'];
         $user->phone_number = $validatedData['phone_number'] ?? null;
 
+        // Actualizar contraseña si fue proporcionada
         if (!empty($validatedData['password'])) {
             $user->password = bcrypt($validatedData['password']);
         }
@@ -111,17 +124,19 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Ruta completa al archivo en el sistema de archivos
-        $imagePath = public_path('storage/' . $user->profile_image);
-
-        // Verificar si la imagen existe y eliminarla
-        if ($user->profile_image && file_exists($imagePath)) {
-            unlink($imagePath); // Eliminar el archivo
+        // Verificar si la imagen no es la predeterminada antes de eliminarla
+        if ($user->profile_image && !str_starts_with($user->profile_image, 'default/')) {
+            $imagePath = public_path('storage/' . $user->profile_image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
         }
 
-        // Eliminar el registro del usuario
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Usuario eliminado exitosamente.'
+        ]);
     }
 }

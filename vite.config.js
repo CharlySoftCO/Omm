@@ -17,4 +17,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        rollupOptions: {
+            external: [
+                'datatables.net-bs5/css/dataTables.bootstrap5.css',
+            ],
+        },
+    },
 });

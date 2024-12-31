@@ -11,6 +11,7 @@
     <meta name="route-dashboard" content="{{ route('dashboard') }}">
     <meta name="route-users-index" content="{{ route('users.index') }}">
     <meta name="route-users-create" content="{{ route('users.create') }}">
+    <meta name="route-users-destroy" content="{{ route('users.destroy', ':id') }}">
     <meta name="route-clients-index" content="{{ route('clients.index') }}">
     <meta name="route-clients-create" content="{{ route('clients.create') }}">
     <meta name="route-categories-index" content="{{ route('categories.index') }}">

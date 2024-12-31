@@ -3,6 +3,7 @@ const routes = {
     dashboard: document.querySelector('meta[name="route-dashboard"]').getAttribute('content'),
     usersIndex: document.querySelector('meta[name="route-users-index"]').getAttribute('content'),
     usersCreate: document.querySelector('meta[name="route-users-create"]').getAttribute('content'),
+    usersDestroy: document.querySelector('meta[name="route-users-destroy"]').getAttribute('content'), // Nueva ruta
     clientsIndex: document.querySelector('meta[name="route-clients-index"]').getAttribute('content'),
     clientsCreate: document.querySelector('meta[name="route-clients-create"]').getAttribute('content'),
     categoriesIndex: document.querySelector('meta[name="route-categories-index"]').getAttribute('content'),
