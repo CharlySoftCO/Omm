@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import routes from '../../../routes';
 
 const Sidebar = () => {
-  const [activeAccordion, setActiveAccordion] = useState(null);
+  const [activeAccordion, setActiveAccordion] = useState(null); // Acordeón principal
+  const [activeSubAccordion, setActiveSubAccordion] = useState(null); // Subacordeón
   const [activeLink, setActiveLink] = useState(null);
 
-  // Función para manejar el colapso del acordeón
+  // Función para manejar el colapso del acordeón principal
   const toggleAccordion = (targetId) => {
     setActiveAccordion((prev) => (prev === targetId ? null : targetId));
+    setActiveSubAccordion(null); // Resetea subdesplegables al cambiar el principal
+  };
+
+  // Función para manejar el colapso del subacordeón
+  const toggleSubAccordion = (targetId) => {
+    setActiveSubAccordion((prev) => (prev === targetId ? null : targetId));
   };
 
   // Función para establecer el enlace activo
@@ -51,7 +58,6 @@ const Sidebar = () => {
               <a
                 href={routes.usersIndex || '#'}
                 className={`d-flex align-items-center ${activeLink === 'usersIndex' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
                 onClick={() => handleLinkClick('usersIndex')}
               >
                 <i className="bi bi-circle"></i>
@@ -62,7 +68,6 @@ const Sidebar = () => {
               <a
                 href={routes.usersCreate || '#'}
                 className={`d-flex align-items-center ${activeLink === 'usersCreate' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
                 onClick={() => handleLinkClick('usersCreate')}
               >
                 <i className="bi bi-circle"></i>
@@ -93,7 +98,6 @@ const Sidebar = () => {
               <a
                 href={routes.clientsIndex || '#'}
                 className={`d-flex align-items-center ${activeLink === 'clientsIndex' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
                 onClick={() => handleLinkClick('clientsIndex')}
               >
                 <i className="bi bi-circle"></i>
@@ -104,7 +108,6 @@ const Sidebar = () => {
               <a
                 href={routes.clientsCreate || '#'}
                 className={`d-flex align-items-center ${activeLink === 'clientsCreate' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
                 onClick={() => handleLinkClick('clientsCreate')}
               >
                 <i className="bi bi-circle"></i>
@@ -114,11 +117,10 @@ const Sidebar = () => {
           </ul>
         </li>
 
-        {/* Almacén (Desplegable) */}
+        {/* Almacén (Desplegable principal) */}
         <li className="nav-item">
           <a
             className={`nav-link ${activeAccordion === 'warehouse-nav' ? '' : 'collapsed'}`}
-            data-bs-target="#warehouse-nav"
             onClick={() => toggleAccordion('warehouse-nav')}
             href="#"
           >
@@ -131,52 +133,84 @@ const Sidebar = () => {
             className={`nav-content collapse ${activeAccordion === 'warehouse-nav' ? 'show' : ''}`}
             data-bs-parent="#sidebar-nav"
           >
-            {/* Categorías */}
+            {/* Categorías (Subdesplegable) */}
             <li>
               <a
-                href={routes.categoriesIndex || '#'}
-                className={`d-flex align-items-center ${activeLink === 'categoriesIndex' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
-                onClick={() => handleLinkClick('categoriesIndex')}
+                className={`d-flex align-items-center nav-link ${
+                  activeSubAccordion === 'categories-nav' ? '' : 'collapsed'
+                }`}
+                onClick={() => toggleSubAccordion('categories-nav')}
+                href="#"
               >
-                <i className="bi bi-circle"></i>
-                <span>Lista de Categorías</span>
+                <i className="bi bi-folder"></i>
+                <span>Categorías</span>
+                <i className="bi bi-chevron-down ms-auto"></i>
               </a>
-            </li>
-            <li>
-              <a
-                href={routes.categoriesCreate || '#'}
-                className={`d-flex align-items-center ${activeLink === 'categoriesCreate' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
-                onClick={() => handleLinkClick('categoriesCreate')}
+              <ul
+                id="categories-nav"
+                className={`nav-content collapse ${activeSubAccordion === 'categories-nav' ? 'show' : ''}`}
               >
-                <i className="bi bi-circle"></i>
-                <span>Crear Categoría</span>
-              </a>
+                <li>
+                  <a
+                    href={routes.categoriesIndex || '#'}
+                    className={`d-flex align-items-center ${activeLink === 'categoriesIndex' ? 'active' : ''}`}
+                    onClick={() => handleLinkClick('categoriesIndex')}
+                  >
+                    <i className="bi bi-circle"></i>
+                    <span>Lista de Categorías</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={routes.categoriesCreate || '#'}
+                    className={`d-flex align-items-center ${activeLink === 'categoriesCreate' ? 'active' : ''}`}
+                    onClick={() => handleLinkClick('categoriesCreate')}
+                  >
+                    <i className="bi bi-circle"></i>
+                    <span>Crear Categoría</span>
+                  </a>
+                </li>
+              </ul>
             </li>
 
-            {/* Productos */}
+            {/* Productos (Subdesplegable) */}
             <li>
               <a
-                href={routes.productsIndex || '#'}
-                className={`d-flex align-items-center ${activeLink === 'productsIndex' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
-                onClick={() => handleLinkClick('productsIndex')}
+                className={`d-flex align-items-center nav-link ${
+                  activeSubAccordion === 'products-nav' ? '' : 'collapsed'
+                }`}
+                onClick={() => toggleSubAccordion('products-nav')}
+                href="#"
               >
-                <i className="bi bi-circle"></i>
-                <span>Lista de Productos</span>
+                <i className="bi bi-box"></i>
+                <span>Productos</span>
+                <i className="bi bi-chevron-down ms-auto"></i>
               </a>
-            </li>
-            <li>
-              <a
-                href={routes.productsCreate || '#'}
-                className={`d-flex align-items-center ${activeLink === 'productsCreate' ? 'active' : ''}`}
-                style={{ textDecoration: 'none' }}
-                onClick={() => handleLinkClick('productsCreate')}
+              <ul
+                id="products-nav"
+                className={`nav-content collapse ${activeSubAccordion === 'products-nav' ? 'show' : ''}`}
               >
-                <i className="bi bi-circle"></i>
-                <span>Crear Producto</span>
-              </a>
+                <li>
+                  <a
+                    href={routes.productsIndex || '#'}
+                    className={`d-flex align-items-center ${activeLink === 'productsIndex' ? 'active' : ''}`}
+                    onClick={() => handleLinkClick('productsIndex')}
+                  >
+                    <i className="bi bi-circle"></i>
+                    <span>Lista de Productos</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={routes.productsCreate || '#'}
+                    className={`d-flex align-items-center ${activeLink === 'productsCreate' ? 'active' : ''}`}
+                    onClick={() => handleLinkClick('productsCreate')}
+                  >
+                    <i className="bi bi-circle"></i>
+                    <span>Crear Producto</span>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
